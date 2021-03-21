@@ -64,6 +64,7 @@ class Snake(tk.Canvas):
 
     def perform_actions(self):
         if self.check_collisions():
+            self.end_game()
             return
 
         self.check_food_collision()
@@ -111,6 +112,15 @@ class Snake(tk.Canvas):
             if food_position not in self.snake_positions:
                 return food_position
 
+    def end_game(self):
+        self.delete(tk.ALL)
+        self.create_text(
+            self.winfo_width() / 2,
+            self.winfo_height() / 2,
+            text=f"Game Over! You Scored {self.score}!",
+            fill="blue",
+            font=("TkDefaultFont", 24)
+        )
 
 root = tk.Tk()
 root.title("Cobra")
