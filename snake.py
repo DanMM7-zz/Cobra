@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+from random import randint
 
 MOVE_INCREMENT = 20
 MOVES_PER_SECOND = 15
@@ -11,7 +12,7 @@ class Snake(tk.Canvas):
         super().__init__(width=600, height=620, background="brown", highlightthickness=0)
 
         self.snake_positions = [(100, 100), (80, 100), (60, 100)]
-        self.food_position = (200, 100)
+        self.food_position = self.set_new_food_position()
 
         self.load_assets()
         self.create_objects()
@@ -95,8 +96,20 @@ class Snake(tk.Canvas):
                 *self.snake_positions[-1], image=self.snake_body, tag="snake"
             )
 
+            self.food_position = self.set_new_food_position()
+            self.coords(self.find_withtag("food"), self.food_position)
+
             score = self.find_withtag("score")
             self.itemconfigure(score, text=f"Score: {self.score}", tag="score")
+
+    def set_new_food_position(self):
+        while True:
+            x_position = randint(1, 29) * MOVE_INCREMENT
+            y_position = randint(3, 30) * MOVE_INCREMENT
+            food_position = (x_position, y_position)
+
+            if food_position not in self.snake_positions:
+                return food_position
 
 
 root = tk.Tk()
