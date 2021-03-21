@@ -23,6 +23,8 @@ class Snake(tk.Canvas):
             self.snake_body_image = Image.open("./assets/snake.jpg")
             self.snake_body = ImageTk.PhotoImage(self.snake_body_image)
             self.score = 0
+            self.direction = "Right"
+            self.bind_all("<Key>", self.on_key_press)
 
             self.food_image = Image.open("./assets/food.jpg")
             self.food = ImageTk.PhotoImage(self.food_image)
@@ -42,7 +44,17 @@ class Snake(tk.Canvas):
 
     def move_snake(self):
         head_x_position, head_y_position = self.snake_positions[0]
-        new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
+
+        if self.direction == "Left":
+            new_head_position = (head_x_position - MOVE_INCREMENT, head_y_position)
+        elif self.direction == "Right":
+            new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
+        elif self.direction == "Down":
+            new_head_position = (head_x_position, head_y_position + MOVE_INCREMENT)
+        elif self.direction == "Up":
+            new_head_position = (head_x_position, head_y_position - MOVE_INCREMENT)
+
+        #new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
 
         self.snake_positions = [new_head_position] + self.snake_positions[:-1]
 
@@ -64,6 +76,11 @@ class Snake(tk.Canvas):
             or head_y_position in (20, 620)
             or (head_x_position, head_y_position) in self.snake_positions[1:]
         )
+
+    def on_key_press(self, e):
+        new_direction = e.keysym
+
+        self.direction = new_direction
 
 
 root = tk.Tk()
