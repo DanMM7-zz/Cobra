@@ -3,8 +3,8 @@ from PIL import Image, ImageTk
 from random import randint
 
 MOVE_INCREMENT = 20
-MOVES_PER_SECOND = 15
-GAME_SPEED = 1000 // MOVES_PER_SECOND
+moves_per_second = 15
+GAME_SPEED = 1000 // moves_per_second
 
 
 class Snake(tk.Canvas):
@@ -35,7 +35,7 @@ class Snake(tk.Canvas):
 
     def create_objects(self):
         self.create_text(
-            45, 12, text=f"Score {self.score}", tag="score", fill="#000", font=("TkDefaultFont", 14)
+            100, 12, text=f"Score {self.score} (speed: {moves_per_second})", tag="score", fill="#000", font=("TkDefaultFont", 14)
         )
         for x_position, y_position in self.snake_positions:
             self.create_image(x_position, y_position, image=self.snake_body, tag="snake")
@@ -93,6 +93,10 @@ class Snake(tk.Canvas):
             self.score += 1
             self.snake_positions.append(self.snake_positions[-1])
 
+            if self.score % 5 == 0:
+                global moves_per_second
+                moves_per_second += 1
+
             self.create_image(
                 *self.snake_positions[-1], image=self.snake_body, tag="snake"
             )
@@ -101,7 +105,7 @@ class Snake(tk.Canvas):
             self.coords(self.find_withtag("food"), self.food_position)
 
             score = self.find_withtag("score")
-            self.itemconfigure(score, text=f"Score: {self.score}", tag="score")
+            self.itemconfigure(score, text=f"Score: {self.score} (speed: {moves_per_second})", tag="score")
 
     def set_new_food_position(self):
         while True:
@@ -118,9 +122,10 @@ class Snake(tk.Canvas):
             self.winfo_width() / 2,
             self.winfo_height() / 2,
             text=f"Game Over! You Scored {self.score}!",
-            fill="blue",
+            fill="#000",
             font=("TkDefaultFont", 24)
         )
+
 
 root = tk.Tk()
 root.title("Cobra")
