@@ -2,6 +2,8 @@ import tkinter as tk
 from PIL import Image, ImageTk
 
 MOVE_INCREMENT = 20
+MOVES_PER_SECOND = 15
+GAME_SPEED = 1000 // MOVES_PER_SECOND
 
 
 class Snake(tk.Canvas):
@@ -48,8 +50,21 @@ class Snake(tk.Canvas):
             self.coords(segment, position)
 
     def perform_actions(self):
+        if self.check_collisions():
+            return
+
         self.move_snake()
-        self.after(75, self.perform_actions)
+        self.after(GAME_SPEED, self.perform_actions)
+
+    def check_collisions(self):
+        head_x_position, head_y_position = self.snake_positions[0]
+
+        return (
+            head_x_position in (0, 600)
+            or head_y_position in (20, 620)
+            or (head_x_position, head_y_position) in self.snake_positions[1:]
+        )
+
 
 root = tk.Tk()
 root.title("Cobra")
