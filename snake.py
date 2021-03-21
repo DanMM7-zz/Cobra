@@ -1,6 +1,9 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
+MOVE_INCREMENT = 20
+
+
 class Snake(tk.Canvas):
     def __init__(self):
         super().__init__(width=600, height=620, background="brown", highlightthickness=0)
@@ -10,6 +13,8 @@ class Snake(tk.Canvas):
 
         self.load_assets()
         self.create_objects()
+
+        self.after(75, self.perform_actions)
 
     def load_assets(self):
         try:
@@ -33,6 +38,18 @@ class Snake(tk.Canvas):
         self.create_image(*self.food_position, image=self.food, tag="food")
         self.create_rectangle(7, 27, 593, 613, outline="#000")
 
+    def move_snake(self):
+        head_x_position, head_y_position = self.snake_positions[0]
+        new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
+
+        self.snake_positions = [new_head_position] + self.snake_positions[:-1]
+
+        for segment, position in zip(self.find_withtag("snake"), self.snake_positions):
+            self.coords(segment, position)
+
+    def perform_actions(self):
+        self.move_snake()
+        self.after(75, self.perform_actions)
 
 root = tk.Tk()
 root.title("Cobra")
