@@ -15,6 +15,7 @@ class Snake(tk.Canvas):
         try:
             self.snake_body_image = Image.open("./assets/snake.jpg")
             self.snake_body = ImageTk.PhotoImage(self.snake_body_image)
+            self.score = 0
 
             self.food_image = Image.open("./assets/food.jpg")
             self.food = ImageTk.PhotoImage(self.food_image)
@@ -23,10 +24,13 @@ class Snake(tk.Canvas):
             root.destroy()
 
     def create_objects(self):
+        self.create_text(
+            45, 12, text=f"Score {self.score}", tag="score", fill="#000", font=("TkDefaultFont", 14)
+        )
         for x_position, y_position in self.snake_positions:
             self.create_image(x_position, y_position, image=self.snake_body, tag="snake")
 
-        self.create_image(self.food_position[0], self.food_position[1], image=self.food, tag="food")
+        self.create_image(*self.food_position, image=self.food, tag="food")
 
 
 root = tk.Tk()
