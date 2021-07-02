@@ -1,5 +1,4 @@
 # Cobra
-The classic snake game made with Python tkinter
 
 ### Features a Main Menu and Scoreboard
 
