@@ -18,7 +18,7 @@ Firstly, ensure you have Python 3.x installed
 Clone this repository by running
 
 ```
-git clone 
+git clone https://github.com/DanMM7/Cobra.git
 ```
 
 Make sure you have the right dependencies installed
