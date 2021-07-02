@@ -1,9 +1,8 @@
 # Cobra
-The classic snake game made with Python tkinter
 
 ### Features a Main Menu and Scoreboard
 
-![Game Play Image](/GamePlay.gif?raw=true "Game Play")
+![Game Play Image](/GamePlay.png?raw=true "Game Play")
 
 ## Getting Started
 
@@ -31,3 +30,6 @@ Then run
 
 ```
 python run.py
+```
+
+![Game Play Image](/GamePlay.gif?raw=true "Game Play")
